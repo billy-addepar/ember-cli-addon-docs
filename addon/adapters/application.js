@@ -9,6 +9,7 @@ export default DS.JSONAPIAdapter.extend({
   projectVersion: service(),
 
   buildURL(modelName, id, snapshot, requestType, query) {
+    // console.log(`${this._super(...arguments)}.json`);
     return `${this._super(...arguments)}.json`;
   },
 
@@ -22,7 +23,8 @@ export default DS.JSONAPIAdapter.extend({
 
   findRecord(store, modelClass, id, snapshot) {
     let type = modelClass.modelName;
-    if (type === 'project') {
+    if (type === 'project' || type === 'project-css') {
+      // console.log(type);
       return this._super(...arguments);
     } else if (type === 'project-version') {
       return this._projectVersion || (this._projectVersion = this._super(...arguments));
@@ -38,5 +40,4 @@ export default DS.JSONAPIAdapter.extend({
         });
     }
   }
-
 });

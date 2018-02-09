@@ -1,0 +1,36 @@
+// launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+
+  {
+    "type": "node",
+    "request": "launch",
+    "name": "Ember Build",
+    "program": "${workspaceRoot}/node_modules/ember-cli/bin/ember",
+    "args": [
+      "build"
+    ]
+  },
+  {
+    "type": "node",
+    "request": "launch",
+    "name": "Ember Serve",
+    "program": "${workspaceRoot}/node_modules/ember-cli/bin/ember",
+    "args": [
+      "serve"
+    ]
+  },
+  {
+    "type": "node",
+    "request": "launch",
+    "name": "JSCodeShift",
+    "runtimeExecutable": "npm",
+    "port": 9229,
+    "args": [
+      "run",
+      "dev"
+    ]
+  }
+  ]
+}

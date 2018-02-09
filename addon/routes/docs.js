@@ -17,7 +17,7 @@ export default Route.extend({
         this.set('projectVersion.version', version);
 
         return this.store.findRecord('project-version', projectVersion);
-      });
+      })
+      .then(() => this.store.findRecord('project-css', packageJson.name));
   }
-
 });

@@ -1,0 +1,121 @@
+/* alert.scss */
+
+//
+// @name Alert
+// @description Alert system used to communicate certain app states to the user.
+//
+
+// Variables
+// -----------------------------
+$alert-padding:                  15px;
+$alert-dismissable-offset:       $alert-padding + $icon-size + $padding-small-horizontal;
+$alert-width:                    60%;
+
+$alert-close-icon-size:          15px;
+$alert-close-icon-font-size:     20px;
+$alert-close-opacity:            0.2;
+$alert-close-hover-opacity:      0.5;
+
+$alert-success-bg:               $state-success-bg;
+$alert-success-text:             $state-success-text;
+$alert-success-border:           $state-success-border;
+
+$alert-warning-bg:               $state-warning-bg;
+$alert-warning-text:             $state-warning-text;
+$alert-warning-border:           $state-warning-border;
+
+$alert-error-bg:                 $state-error-bg;
+$alert-error-text:               $state-error-text;
+$alert-error-border:             $state-error-border;
+
+
+// Alert Base
+// -----------------------------
+
+.alert {
+  @include anchor-element($padding-large-horizontal, 0, auto, 0);
+  margin: auto;
+  width: $alert-width;
+  padding: $alert-padding;
+  font-weight: $font-medium;
+  text-align: center;
+  // Over modals
+  //z-index: z('alert');
+  z-index: 1000;
+}
+
+// Close button should only be visible when in .alert-dismissable
+.alert-close {
+  display: none;
+}
+
+
+// -----------------------------
+
+// @section Alert Types
+// @description Alert system used to communicate certain app states to the user.
+//
+// @state .alert-success - Green bar to be triggered when an action is successful
+// @state .alert-warning - Yellow bar to be triggered when an action is unsuccessful, or the user tries an action that is not allowed
+// @state .alert-error -   Red bar to be triggered when something goes wrong in the app, we should never purposefully trigger a redbar
+//
+// @markup
+//   <div class="alert alert-success">Your action was successful!</div>
+//   <div class="alert alert-warning">Your action was unsuccessful. Our warnings also purposefully have left-aligned text.</div>
+//   <div class="alert alert-error">Something went wrong, please reload.</div>
+//
+
+.alert-success {
+  @include alert-type($alert-success-bg, $alert-success-border, $alert-success-text);
+}
+
+.alert-warning {
+  @include alert-type($alert-warning-bg, $alert-warning-border, $alert-warning-text);
+  // These tend to have longer messages and look better as left-aligned text
+  text-align: left;
+}
+
+.alert-error {
+  @include alert-type($alert-error-bg, $alert-error-border, $alert-error-text);
+}
+
+
+// -----------------------------
+
+// @section Alert Utilties
+// @description Optional utilities for alerts. Note that the alert still needs an alert type.
+//
+// @state .alert-dismissable - A utility class to mark an alert that uses a close button. The close button should only be used when the alert has this class
+// @state
+//
+// @markup
+//   <div class="alert alert-success alert-dismissable">
+//      <a href="#" class="alert-close">&times;</a>
+//      Your action was successful!
+//   </div>
+//
+
+.alert-dismissable {
+  // Allows room for the close icon
+  padding-right: $alert-dismissable-offset;
+
+  // Most of our alerts are one liners, so this style makes the icon
+  // appear vertically centered in the bar. If it is more than one line,
+  // the icon will be in the top right corner.
+  .alert-close {
+    @include anchor-element($alert-padding, $alert-padding);
+    display: block;
+    width: $alert-close-icon-size;
+    height: $alert-close-icon-size;
+    line-height: $alert-close-icon-size;
+    font-size: $alert-close-icon-font-size;
+    font-weight: $font-bold;
+    color: inherit;
+    opacity: $alert-close-opacity;
+    transition: opacity $global-transition-duration ease-in-out;
+
+    &:hover {
+      opacity: $alert-close-hover-opacity;
+    }
+  }
+}

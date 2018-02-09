@@ -127,15 +127,20 @@ module.exports = {
 
     let DocsGenerator = require('./lib/broccoli/docs-generator');
     let SearchIndexer = require('./lib/broccoli/search-indexer');
+    let ScssGenerator = require('./lib/broccoli/scss-generator');
 
     let addonSources = path.resolve(parentAddon.root, parentAddon.treePaths.addon);
     let docsTree = new DocsGenerator([addonSources], {
       project: this.project,
       destDir: 'docs'
     });
+    let scssTree = new ScssGenerator([addonSources], {
+      project: this.project,
+      destDir: 'docs'
+    });
 
     let templateContentsTree = this.contentExtractor.getTemplateContentsTree();
-    let searchIndexTree = new SearchIndexer(new MergeTrees([docsTree, templateContentsTree]), {
+    let searchIndexTree = new SearchIndexer(new MergeTrees([scssTree, docsTree, templateContentsTree]), {
       outputFile: 'ember-cli-addon-docs/search-index.json',
       config: this.project.config(EmberApp.env())
     });
@@ -144,7 +149,7 @@ module.exports = {
       include: ['404.html']
     });
 
-    return new MergeTrees([ defaultTree, notFoundSnippet, docsTree, searchIndexTree ]);
+    return new MergeTrees([ defaultTree, notFoundSnippet, docsTree, scssTree, searchIndexTree ]);
   },
 
   _lunrTree() {
